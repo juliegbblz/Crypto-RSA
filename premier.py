@@ -3,7 +3,7 @@ import random
 from euclide_etendu import exponentiation_modulaire
 
 
-def generation_nombre_premier(nbits):
+def generation_nombre(nbits):
     premier=random.getrandbits(nbits)
     return premier
 
@@ -31,7 +31,7 @@ def temoin(a,premier):
 
     return True
 
-def pseudo_premier(premier):
+def Miller_Rabin(premier):
     if premier in (2, 3):
         return True
     if premier <= 1 or premier % 2 == 0:
@@ -42,5 +42,14 @@ def pseudo_premier(premier):
         if temoin(a,premier):
             return False
     return True
+
+def generateur_premier(nbits):
+    flag = True
+    nb = 0
+    while flag:
+        nb = generation_nombre(nbits)
+        if Miller_Rabin(nb):
+            flag = False
+    return (nb)
 
 
