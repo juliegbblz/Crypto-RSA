@@ -27,14 +27,6 @@ print("pgcd(7, 60) =", pgcd) #bon dapres lexo 1 RSA
 
 d= exponentiation_modulaire(7, 3, 60)
 print("7^3 mod 60 =", d)
-
-""" def generer_cle_rsa(e, phi):
-    d, x, y = euclide_etendu(e, phi)
-    if d != 1:
-        print("e et phi ne sont pas premiers entre eux")
-    else:
-        return x % phi
-     """
     
 def generer_cles_RSA(p, q):
     n = p * q
