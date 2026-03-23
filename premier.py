@@ -51,5 +51,3 @@ def generateur_premier(nbits):
         if Miller_Rabin(nb):
             flag = False
     return (nb)
-
-print(generateur_premier(8))

@@ -22,38 +22,38 @@ def exponentiation_modulaire(a,b,n):
     return resultat
 
 
-pgcd =  euclide_etendu(7, 60)
-print("pgcd(7, 60) =", pgcd) #bon dapres lexo 1 RSA
+def pgcd(a, b):
+    return euclide_etendu(a, b)[0]
 
-d= exponentiation_modulaire(7, 3, 60)
-print("7^3 mod 60 =", d)
     
-def generer_cles_RSA(p, q):
+def generer_cles_RSA(p, q, e):
     n = p * q
     phi_n = (p - 1) * (q - 1)
-    e = 7
+
+    if e <= 1 or e >= phi_n or pgcd(e, phi_n) != 1:
+        e = 65537
+        if e >= phi_n or pgcd(e, phi_n) != 1:
+            e = 3
+            while e < phi_n and pgcd(e, phi_n) != 1:
+                e += 2
+            if e >= phi_n:
+                raise ValueError("Aucun exposant e inversible modulo phi(n)")
+
     d = pow(e, -1, phi_n)
     cle_publique = (e, n)
-    print(cle_publique)
     cle_privee = (d, n)
     return cle_publique, cle_privee
 
-cles_publiques, cles_privees = generer_cles_RSA(7, 11)
 
-print("Clés publiques (e, n):", cles_publiques)
-print("Clés privées (d, n):", cles_privees)
 
 def chiffrer(message, cle_publique):
     e, n = cle_publique
     message_chiffre = [exponentiation_modulaire(message, e, n)]
     return message_chiffre
 
-m=chiffrer(75,cles_publiques)
-print("Message chiffré:", m)
+
 
 def dechiffrer(message_chiffre, cle_privee):
     d, n = cle_privee
     message_dechiffre = [exponentiation_modulaire(m, d, n) for m in message_chiffre]
     return message_dechiffre
-
-print("Message déchiffré:", dechiffrer(m, cles_privees))
