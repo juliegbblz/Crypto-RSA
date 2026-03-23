@@ -52,4 +52,4 @@ def generateur_premier(nbits):
             flag = False
     return (nb)
 
-
+print(generateur_premier(8))
